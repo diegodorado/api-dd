@@ -2,7 +2,7 @@ FROM node:12
 ENV VIRTUAL_HOST api.diegodorado.com
 ENV LETSENCRYPT_HOST api.diegodorado.com
 ENV LETSENCRYPT_EMAIL diegodorado@gmail.com
-ENV PORT 80
+ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 COPY package*.json ./

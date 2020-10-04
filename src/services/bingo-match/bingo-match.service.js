@@ -26,6 +26,7 @@ class BallsService {
     const m = await service.get(id)
     const balls = [params.ball,...m.balls]
     const p = await service.patch(id,{...m,balls})
+    service.emit('ball', {...params, matchId: id})
     return p
   }
 }
@@ -33,7 +34,7 @@ class BallsService {
 
 module.exports = function (app) {
   const options = {
-    events: ['balls'],
+    events: ['ball','msg'],
     Model: createModel(app),
     paginate: app.get('paginate')
   };
@@ -45,15 +46,8 @@ module.exports = function (app) {
 
   // Get our initialized service so that we can register hooks
   const service = app.service('bingo-match');
-
-  service.on('created', (message, context) => console.log('created', message))
-  service.on('patched', (message, context) => {
-    const data = {type:'customEvent',data: 'anything'}
-    service.emit('balls', data)
-  })
-
-  service.publish('patched', () => app.channel('anonymous'))
-  service.publish('balls', () => app.channel('anonymous'))
+  service.publish('ball', () => app.channel('anonymous'))
+  service.publish('msg', () => app.channel('anonymous'))
   app.service('bingo-chat').publish('msg', () => app.channel('anonymous'))
 
   service.hooks(hooks);
