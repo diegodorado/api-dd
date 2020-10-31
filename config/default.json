@@ -19,7 +19,7 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "https://diegodorado.com",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"
