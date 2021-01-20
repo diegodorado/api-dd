@@ -25,7 +25,8 @@ class BallsService {
     const service = this.app.service('bingo-match');
     const m = await service.get(id)
     const balls = [params.ball,...m.balls]
-    const p = await service.patch(id,{...m,balls})
+    const match = {...m,balls}
+    const p = await service.patch(id, match)
     service.emit('ball', {...params, matchId: id})
     return p
   }
@@ -36,7 +37,8 @@ module.exports = function (app) {
   const options = {
     events: ['ball','msg'],
     Model: createModel(app),
-    paginate: app.get('paginate')
+    paginate: app.get('paginate'),
+    multi: [ 'remove' ],
   };
 
   // Initialize our service with any options it requires

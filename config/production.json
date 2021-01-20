@@ -1,5 +1,5 @@
 {
-  "host": "api.apps.diegodorado.com",
+  "host": "api.diegodorado.com",
   "port": 80,
   "nedb": "/var/data"
 }
